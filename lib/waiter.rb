@@ -1,3 +1,5 @@
+require_relative "./meal.rb"
+
 class Waiter
 
     @@all = []
@@ -14,5 +16,21 @@ class Waiter
 
     def new_meal(customer, total, tip=0)
         Meal.new(self, customer, total, tip)
+    end
+
+    def meals()
+        Meal.all.select{|meal| meal.waiter == self}
+    end
+
+    def best_tipper()
+        tip_array = []
+
+        max_tip = Meal.all.map { |meal| meal.tip}.max #=> this returns max tip number.
+
+        Meal.all.each do |meal| 
+        if meal.tip == max_tip
+            return meal.customer
+        end
+    end
     end
 end

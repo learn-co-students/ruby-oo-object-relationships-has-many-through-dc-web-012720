@@ -1,3 +1,7 @@
+require_relative "./meal.rb"
+require_relative "./waiter.rb"
+require "pry"
+
 class Customer
 
     attr_reader :name, :age
@@ -14,5 +18,13 @@ class Customer
 
     def new_meal(waiter, total, tip = 0)
         Meal.new(waiter, self, total, tip) #self refers to customer here
+    end
+
+    def meals
+        Meal.all.select{|meal| meal.customer == self}
+    end
+
+    def waiters
+        Meal.all.select{|meal| meal.customer == self}.map{|meal| meal.waiter}
     end
 end
